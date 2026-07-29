@@ -50,23 +50,22 @@ function App() {
   return (
     <div className="min-h-screen bg-zinc-50 p-4 md:p-8 flex flex-col items-center">
       <div className="w-full max-w-[1400px]">
-        
+
         {/* Header */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
           <div>
-            <h1 className="text-3xl tracking-tight font-bold text-zinc-900">Placement Engine</h1>
+            <h1 className="text-3xl tracking-tight font-bold text-zinc-900">Media Engine</h1>
             <p className="text-zinc-500 mt-1">ADYPG SPCR Office Automation</p>
           </div>
-          
+
           {/* Mac OS Dock / Pill Navigation */}
           <nav className="flex space-x-1 bg-zinc-200/50 p-1 rounded-full border border-zinc-200">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative px-6 py-2 text-sm font-medium rounded-full transition-colors ${
-                  activeTab === tab.id ? 'text-emerald-900' : 'text-zinc-600 hover:text-zinc-900'
-                }`}
+                className={`relative px-6 py-2 text-sm font-medium rounded-full transition-colors ${activeTab === tab.id ? 'text-emerald-900' : 'text-zinc-600 hover:text-zinc-900'
+                  }`}
               >
                 {activeTab === tab.id && (
                   <motion.div
@@ -85,7 +84,7 @@ function App() {
         <main className="w-full relative">
           <AnimatePresence mode="wait">
             {activeTab === 'generator' ? (
-              <motion.div 
+              <motion.div
                 key="generator"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -95,30 +94,30 @@ function App() {
               >
                 {/* Left Column: Form & Results */}
                 <div className="lg:col-span-5 flex flex-col gap-8">
-                  <FlyerForm 
-                    formData={formData} 
-                    setFormData={setFormData} 
+                  <FlyerForm
+                    formData={formData}
+                    setFormData={setFormData}
                     onGenerateCaption={handleGenerateCaption}
                     isGenerating={isGenerating}
                   />
-                  <ResultDashboard 
-                    caption={caption} 
-                    onExportImage={handleExportImage} 
+                  <ResultDashboard
+                    caption={caption}
+                    onExportImage={handleExportImage}
                   />
                 </div>
-                
+
                 {/* Right Column: Preview */}
                 <div className="lg:col-span-7">
                   <div className="sticky top-8">
-                    <FlyerPreview 
-                      formData={formData} 
-                      onExportReady={setStageRef} 
+                    <FlyerPreview
+                      formData={formData}
+                      onExportReady={setStageRef}
                     />
                   </div>
                 </div>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 key="settings"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

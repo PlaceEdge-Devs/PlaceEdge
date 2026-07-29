@@ -65,13 +65,13 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
   return (
     <div className="bento-card flex flex-col gap-6 relative">
       <div className="flex justify-between items-center pb-4 border-b border-zinc-100">
-        <h2 className="text-xl font-semibold tracking-tight text-zinc-900">Placement Data</h2>
-        <select 
-          value={formData.students.length || 1} 
+        <h2 className="text-xl font-semibold tracking-tight text-zinc-900">Flyer Data</h2>
+        <select
+          value={formData.students.length || 1}
           onChange={handleLayoutChange}
           className="bg-zinc-50 border border-zinc-200 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors"
         >
-          {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} Student{n > 1 ? 's' : ''}</option>)}
+          {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n} Student{n > 1 ? 's' : ''}</option>)}
         </select>
       </div>
 
@@ -79,10 +79,10 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Company Name</label>
-            <input 
-              type="text" 
-              value={formData.companyName} 
-              onChange={e => setFormData({...formData, companyName: e.target.value})} 
+            <input
+              type="text"
+              value={formData.companyName}
+              onChange={e => setFormData({ ...formData, companyName: e.target.value })}
               className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors"
               placeholder="e.g. Google, Evonence"
             />
@@ -99,10 +99,10 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Package / Stipend</label>
-            <input 
-              type="text" 
-              value={formData.stipend} 
-              onChange={e => setFormData({...formData, stipend: e.target.value})} 
+            <input
+              type="text"
+              value={formData.stipend}
+              onChange={e => setFormData({ ...formData, stipend: e.target.value })}
               className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors"
               placeholder="Optional"
             />
@@ -117,13 +117,13 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
               </div>
               <h3 className="font-medium text-zinc-700">Student Details</h3>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Full Name</label>
                 <input type="text" value={student.name} onChange={e => handleStudentChange(i, 'name', e.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
               </div>
-              
+
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Photo</label>
                 <div className="relative w-full">
@@ -150,12 +150,12 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
                 <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Role</label>
                 <input type="text" value={student.role} onChange={e => handleStudentChange(i, 'role', e.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
               </div>
-              
+
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">LinkedIn URL</label>
                 <input type="url" value={student.linkedinProfileUrl} onChange={e => handleStudentChange(i, 'linkedinProfileUrl', e.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
               </div>
-              
+
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Batch</label>
                 <input type="text" value={student.batch} onChange={e => handleStudentChange(i, 'batch', e.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
@@ -164,9 +164,9 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
           </motion.div>
         ))}
 
-        <motion.button 
+        <motion.button
           variants={itemVariants}
-          onClick={onGenerateCaption} 
+          onClick={onGenerateCaption}
           disabled={isGenerating}
           whileTap={{ scale: 0.98 }}
           className="mt-2 w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl py-3.5 font-semibold tracking-wide transition-colors flex items-center justify-center gap-2"
