@@ -155,6 +155,14 @@ export default function FlyerPreview({ formData, onExportReady }) {
   const [footerImage] = useImage('/elements/lower element.png');
   const [logoImage] = useImage(formData.companyLogo);
 
+  const [fontsLoaded, setFontsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    document.fonts.ready.then(() => {
+      setFontsLoaded(true);
+    });
+  }, []);
+
   React.useEffect(() => {
     if (stageRef.current) {
       onExportReady(stageRef.current);
@@ -194,6 +202,7 @@ export default function FlyerPreview({ formData, onExportReady }) {
             )}
 
             <Text
+              key={fontsLoaded ? 'font-loaded' : 'font-loading'}
               text="Congratulations"
               fontSize={65}
               fill="#c8102e"
