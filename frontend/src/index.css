@@ -4,6 +4,13 @@
 @import "@fontsource/geist-sans/600.css";
 @import "@fontsource/geist-sans/700.css";
 
+@font-face {
+  font-family: 'Halimun';
+  src: url('./assets/Halimun.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @theme {
   --font-sans: 'Geist Sans', sans-serif;
 }

@@ -54,8 +54,8 @@ function App() {
         {/* Header */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
           <div>
-            <h1 className="text-3xl tracking-tight font-bold text-zinc-900">Poster SPCR</h1>
-            <p className="text-zinc-500 mt-1">ADYPG SPCR Office Automation</p>
+            <h1 className="text-3xl tracking-tight font-bold text-red-600" style={{ fontFamily: "'Emilys Candy', cursive" }}>Poster SPCR</h1>
+            <p className="text-zinc-500 mt-1 font-bold">ADYPG SPCR Office Automation</p>
           </div>
 
           {/* Mac OS Dock / Pill Navigation */}

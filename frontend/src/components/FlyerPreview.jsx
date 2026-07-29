@@ -194,12 +194,13 @@ export default function FlyerPreview({ formData, onExportReady }) {
             )}
 
             <Text
-              text="Congratulations!"
-              fontSize={85}
+              text="Congratulations"
+              fontSize={65}
               fill="#c8102e"
               width={flyerWidth}
               align="center"
               y={headerHeight + 15}
+              fontFamily="Halimun"
             />
           </Layer>
 
