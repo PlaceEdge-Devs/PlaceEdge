@@ -45,7 +45,7 @@ export default function StudentCard({ x, y, size, student, identicalRoles }) {
       />
       
       <Text 
-        text={student.department || 'Department'} 
+        text={`${student.year === 'Second Year' ? 'SE' : student.year === 'Third Year' ? 'TE' : 'BE'} ${student.department || 'Computer Engineering'}`} 
         fontSize={22} 
         fontStyle="bold"
         align="center" 

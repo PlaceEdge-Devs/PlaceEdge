@@ -6,7 +6,8 @@ import PhotoGrid from './konva/PhotoGrid';
 function SingleStudentLayout({ student, formData, logoImage, headerHeight }) {
   const [studentImg] = useImage(student.photoDataUrl);
 
-  const deptText = `${student.department || 'BE CS'} | `;
+  const yearPrefix = student.year === 'Second Year' ? 'SE' : student.year === 'Third Year' ? 'TE' : 'BE';
+  const deptText = `${yearPrefix} ${student.department || 'Computer Engineering'} | `;
   const tempCanvas = document.createElement('canvas');
   const ctx = tempCanvas.getContext('2d');
   ctx.font = 'bold 24px Arial';
