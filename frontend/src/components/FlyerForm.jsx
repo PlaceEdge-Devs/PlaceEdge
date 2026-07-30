@@ -141,6 +141,27 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
               bgClass="bg-zinc-50"
               hoverClass="hover:bg-zinc-100"
             />
+            {formData.companyLogo && (
+              <div className="flex flex-col gap-1 mt-1">
+                <div className="flex items-center justify-between text-xs text-zinc-400">
+                  <span>Logo Size</span>
+                  <span className="font-semibold text-zinc-600">{formData.logoScale}px</span>
+                </div>
+                <input
+                  type="range"
+                  min={60}
+                  max={500}
+                  step={5}
+                  value={formData.logoScale}
+                  onChange={e => setFormData({ ...formData, logoScale: Number(e.target.value) })}
+                  className="w-full h-1.5 bg-zinc-200 rounded-full appearance-none cursor-pointer accent-emerald-500"
+                />
+                <div className="flex justify-between text-[10px] text-zinc-400">
+                  <span>Small</span>
+                  <span>Large</span>
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Package / Stipend</label>

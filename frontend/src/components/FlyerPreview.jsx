@@ -1,17 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 import { Stage, Layer, Rect, Text, Image as KonvaImage, Group } from 'react-konva';
 import useImage from 'use-image';
 import PhotoGrid from './konva/PhotoGrid';
 
-function SingleStudentLayout({ student, formData, logoImage, headerHeight }) {
+function SingleStudentLayout({ student, formData, logoImage, headerHeight, logoScale }) {
   const [studentImg] = useImage(student.photoDataUrl);
 
   const yearPrefix = student.year === 'Second Year' ? 'SE' : student.year === 'Third Year' ? 'TE' : 'BE';
   const deptText = `${yearPrefix} ${student.department || 'Computer Engineering'} | `;
-  const tempCanvas = document.createElement('canvas');
-  const ctx = tempCanvas.getContext('2d');
-  ctx.font = 'bold 24px Arial';
-  const deptWidth = ctx.measureText(deptText).width;
+
+  // Memoize expensive canvas text measurement — avoids creating a DOM element every render
+  const deptWidth = useMemo(() => {
+    const tempCanvas = document.createElement('canvas');
+    const ctx = tempCanvas.getContext('2d');
+    ctx.font = 'bold 24px Arial';
+    return ctx.measureText(deptText).width;
+  }, [deptText]);
+
+  // Track dragged logo position
+  const [logoPos, setLogoPos] = useState({ x: 160, y: headerHeight + 680 });
 
   return (
     <Layer>
@@ -76,19 +83,28 @@ function SingleStudentLayout({ student, formData, logoImage, headerHeight }) {
       {logoImage && (
         <KonvaImage
           image={logoImage}
-          x={160}
-          y={headerHeight + 680}
-          width={180}
-          height={(logoImage.height * 180) / logoImage.width}
+          x={logoPos.x}
+          y={logoPos.y}
+          width={logoScale}
+          height={(logoImage.height * logoScale) / logoImage.width}
+          draggable
+          onMouseEnter={() => { document.body.style.cursor = 'move'; }}
+          onMouseLeave={() => { document.body.style.cursor = 'default'; }}
+          onDragEnd={(e) => {
+            setLogoPos({ x: e.target.x(), y: e.target.y() });
+          }}
         />
       )}
     </Layer>
   );
 }
 
-function MultiStudentLayout({ students, formData, logoImage, flyerWidth, headerHeight }) {
+function MultiStudentLayout({ students, formData, logoImage, flyerWidth, headerHeight, logoScale }) {
   const allRoles = students.map(s => s.role).filter(Boolean);
   const identicalRoles = allRoles.length > 1 && allRoles.every(r => r === allRoles[0]);
+
+  const defaultLogoY = formData.stipend ? (identicalRoles ? 130 : 90) : (identicalRoles ? 90 : 50);
+  const [logoPos, setLogoPos] = useState({ x: 0, y: defaultLogoY });
 
   return (
     <Layer>
@@ -124,10 +140,16 @@ function MultiStudentLayout({ students, formData, logoImage, flyerWidth, headerH
         {logoImage ? (
           <KonvaImage
             image={logoImage}
-            x={0}
-            y={formData.stipend ? (identicalRoles ? 130 : 90) : (identicalRoles ? 90 : 50)}
-            width={200}
-            height={(logoImage.height * 200) / logoImage.width}
+            x={logoPos.x}
+            y={logoPos.y}
+            width={logoScale}
+            height={(logoImage.height * logoScale) / logoImage.width}
+            draggable
+            onMouseEnter={() => { document.body.style.cursor = 'move'; }}
+            onMouseLeave={() => { document.body.style.cursor = 'default'; }}
+            onDragEnd={(e) => {
+              setLogoPos({ x: e.target.x(), y: e.target.y() });
+            }}
           />
         ) : (
           <Text
@@ -181,8 +203,8 @@ export default function FlyerPreview({ formData, onExportReady }) {
 
   return (
     <div className="flyer-preview" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <div style={{ transform: 'scale(0.5)', transformOrigin: 'top center', height: flyerHeight * 0.5 }}>
-        <Stage width={flyerWidth} height={flyerHeight} ref={stageRef}>
+      <div style={{ width: flyerWidth * 0.5, height: flyerHeight * 0.5 }}>
+        <Stage width={flyerWidth * 0.5} height={flyerHeight * 0.5} scale={{ x: 0.5, y: 0.5 }} ref={stageRef}>
           <Layer>
             <Rect width={flyerWidth} height={flyerHeight} fill="#ffffff" />
 
@@ -220,6 +242,7 @@ export default function FlyerPreview({ formData, onExportReady }) {
               formData={formData}
               logoImage={logoImage}
               headerHeight={headerHeight}
+              logoScale={formData.logoScale ?? 200}
             />
           ) : (
             <MultiStudentLayout
@@ -228,14 +251,15 @@ export default function FlyerPreview({ formData, onExportReady }) {
               logoImage={logoImage}
               flyerWidth={flyerWidth}
               headerHeight={headerHeight}
+              logoScale={formData.logoScale ?? 200}
             />
           )}
 
-          <Layer>
+          <Layer listening={false}>
             {/* Red divider line */}
             <Rect
               x={80}
-              y={flyerHeight - 150}
+              y={flyerHeight - 110}
               width={50}
               height={6}
               fill="#c8102e"
@@ -246,7 +270,7 @@ export default function FlyerPreview({ formData, onExportReady }) {
               fontSize={24}
               fill="#0c2340"
               x={80}
-              y={flyerHeight - 130}
+              y={flyerHeight - 100}
               fontStyle="bold"
             />
             <Text
@@ -254,7 +278,7 @@ export default function FlyerPreview({ formData, onExportReady }) {
               fontSize={24}
               fill="#0c2340"
               x={80}
-              y={flyerHeight - 100}
+              y={flyerHeight - 70}
               fontStyle="bold"
             />
 

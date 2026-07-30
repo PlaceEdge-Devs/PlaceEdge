@@ -11,6 +11,7 @@ function App() {
   const [formData, setFormData] = useState({
     companyName: '',
     companyLogo: null,
+    logoScale: 200,
     stipend: '',
     students: []
   });
