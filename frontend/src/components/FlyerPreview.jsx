@@ -231,7 +231,7 @@ export default function FlyerPreview({ formData, onExportReady }) {
               fill="#c8102e"
               width={flyerWidth}
               align="center"
-              y={headerHeight + 15}
+              y={headerHeight +27}
               fontFamily="Halimun"
             />
           </Layer>
