@@ -52,7 +52,7 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
     const newStudents = [...formData.students];
     if (layout > newStudents.length) {
       for (let i = newStudents.length; i < layout; i++) {
-        newStudents.push({ name: '', department: 'Computer Engineering', year: 'Final Year', batch: '', role: '', linkedinProfileUrl: '', photoDataUrl: null });
+        newStudents.push({ name: '', department: 'Computer Engineering', year: 'Final Year', batch: '', role: '', photoDataUrl: null });
       }
     } else {
       newStudents.splice(layout);
@@ -88,7 +88,7 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
     if (formData.students.length === 0) {
       setFormData({
         ...formData,
-        students: [{ name: '', department: 'Computer Engineering', year: 'Final Year', batch: '', role: '', linkedinProfileUrl: '', photoDataUrl: null }]
+        students: [{ name: '', department: 'Computer Engineering', year: 'Final Year', batch: '', role: '', photoDataUrl: null }]
       });
     }
   }, []);
@@ -225,11 +225,6 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Role</label>
                 <input type="text" value={student.role} onChange={e => handleStudentChange(i, 'role', e.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">LinkedIn URL</label>
-                <input type="url" value={student.linkedinProfileUrl} onChange={e => handleStudentChange(i, 'linkedinProfileUrl', e.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
               </div>
 
               <div className="flex flex-col gap-1.5">
