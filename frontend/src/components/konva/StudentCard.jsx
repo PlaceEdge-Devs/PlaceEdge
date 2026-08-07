@@ -7,7 +7,7 @@ export default function StudentCard({ x, y, size, student, identicalRoles }) {
   
   const width = size;
   const height = size * 1.25;
-  const cornerRadius = 25; // increased for larger image
+  const cornerRadius = 25;
 
   return (
     <Group x={x} y={y}>
