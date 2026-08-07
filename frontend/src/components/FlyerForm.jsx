@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Camera, Sparkles, UploadCloud } from 'lucide-react';
+import { Camera, Download, UploadCloud } from 'lucide-react';
 
 const FileUploadZone = ({ onUpload, isUploaded, defaultText, uploadedText, bgClass, hoverClass }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -46,7 +46,7 @@ const FileUploadZone = ({ onUpload, isUploaded, defaultText, uploadedText, bgCla
   );
 };
 
-export default function FlyerForm({ formData, setFormData, onGenerateCaption, isGenerating }) {
+export default function FlyerForm({ formData, setFormData, onExportImage }) {
   const handleLayoutChange = (e) => {
     const layout = parseInt(e.target.value);
     const newStudents = [...formData.students];
@@ -242,23 +242,12 @@ export default function FlyerForm({ formData, setFormData, onGenerateCaption, is
 
         <motion.button
           variants={itemVariants}
-          onClick={onGenerateCaption}
-          disabled={isGenerating}
+          onClick={onExportImage}
           whileTap={{ scale: 0.98 }}
           className="mt-2 w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl py-3.5 font-semibold tracking-wide transition-colors flex items-center justify-center gap-2"
         >
-          {isGenerating ? (
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-            />
-          ) : (
-            <>
-              <Sparkles size={18} />
-              Generate Caption
-            </>
-          )}
+          <Download size={18} />
+          Export PNG
         </motion.button>
       </motion.div>
     </div>

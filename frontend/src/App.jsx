@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FlyerForm from './components/FlyerForm';
 import FlyerPreview from './components/FlyerPreview';
-import ResultDashboard from './components/ResultDashboard';
 import Settings from './components/Settings';
-import { generateCaption } from './utils/api';
 
 function App() {
   const [activeTab, setActiveTab] = useState('generator');
@@ -15,21 +13,7 @@ function App() {
     stipend: '',
     students: []
   });
-  const [caption, setCaption] = useState('');
   const [stageRef, setStageRef] = useState(null);
-  const [isGenerating, setIsGenerating] = useState(false);
-
-  const handleGenerateCaption = async () => {
-    setIsGenerating(true);
-    try {
-      const result = await generateCaption(formData);
-      setCaption(result);
-    } catch (error) {
-      alert('Failed to generate caption');
-    } finally {
-      setIsGenerating(false);
-    }
-  };
 
   const handleExportImage = () => {
     if (stageRef) {
@@ -98,11 +82,6 @@ function App() {
                   <FlyerForm
                     formData={formData}
                     setFormData={setFormData}
-                    onGenerateCaption={handleGenerateCaption}
-                    isGenerating={isGenerating}
-                  />
-                  <ResultDashboard
-                    caption={caption}
                     onExportImage={handleExportImage}
                   />
                 </div>
