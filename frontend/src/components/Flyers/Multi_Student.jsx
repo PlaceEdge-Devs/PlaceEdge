@@ -3,44 +3,40 @@ import { Layer, Text, Image as KonvaImage, Group } from 'react-konva';
 import PhotoGrid from '../konva/PhotoGrid';
 
 export default function MultiStudentLayout({ students, formData, logoImage, flyerWidth, headerHeight, logoScale }) {
-  const allRoles = students.map(s => s.role).filter(Boolean);
-  const identicalRoles = allRoles.length > 1 && allRoles.every(r => r === allRoles[0]);
-
-  const defaultLogoY = formData.stipend ? (identicalRoles ? 130 : 90) : (identicalRoles ? 90 : 50);
+  const firstRole = students[0]?.role || '';
+  const defaultLogoY = formData.stipend ? 130 : 90;
   const [logoPos, setLogoPos] = useState({ x: 0, y: defaultLogoY });
 
   return (
     <Layer>
       <PhotoGrid
         students={students}
-        y={headerHeight + 110}
+        y={headerHeight + 130}
         width={flyerWidth}
-        identicalRoles={identicalRoles}
+        identicalRoles={true}
       />
 
-      <Group x={80} y={headerHeight + 600}>
+      <Group x={80} y={headerHeight + 615}>
         {/* Global Details - Left Aligned */}
-        {formData.stipend && (
-          <Group y={0}>
-            <Text text={`${formData.compensationType || 'Package'}: `} fontSize={26} fontStyle="bold" fill="#0c2340" />
-            <Text text={formData.stipend} fontSize={26} fontStyle="bold" fill="#c8102e" x={125} />
-          </Group>
-        )}
-
-        <Group y={formData.stipend ? 40 : 0}>
-          <Text text="Placed at: " fontSize={26} fontStyle="bold" fill="#0c2340" />
-          <Text text={formData.companyName || 'Company Name'} fontSize={26} fontStyle="bold" fill="#c8102e" x={135} />
+        <Group y={0}>
+          <Text text="Role: " fontSize={26} fontStyle="bold" fill="#0c2340" />
+          <Text text={firstRole} fontSize={26} fontStyle="bold" fill="#c8102e" x={75} />
         </Group>
 
-        {identicalRoles && (
-          <Group y={formData.stipend ? 80 : 40}>
-            <Text text="Position: " fontSize={26} fontStyle="bold" fill="#0c2340" />
-            <Text text={allRoles[0]} fontSize={26} fontStyle="bold" fill="#c8102e" x={125} />
+        <Group y={40}>
+          <Text text="Company - " fontSize={26} fontStyle="bold" fill="#0c2340" />
+          <Text text={formData.companyName || ''} fontSize={26} fontStyle="bold" fill="#c8102e" x={145} />
+        </Group>
+
+        {formData.stipend && (
+          <Group y={80}>
+            <Text text={`${formData.compensationType || 'Package'}: `} fontSize={26} fontStyle="bold" fill="#0c2340" />
+            <Text text={formData.stipend} fontSize={26} fontStyle="bold" fill="#c8102e" x={120} />
           </Group>
         )}
 
         {/* Company Logo */}
-        {logoImage ? (
+        {logoImage && (
           <KonvaImage
             image={logoImage}
             x={logoPos.x}
@@ -53,15 +49,6 @@ export default function MultiStudentLayout({ students, formData, logoImage, flye
             onDragEnd={(e) => {
               setLogoPos({ x: e.target.x(), y: e.target.y() });
             }}
-          />
-        ) : (
-          <Text
-            text={formData.companyName || 'Company Name'}
-            fontSize={40}
-            fontStyle="bold"
-            fill="#0c2340"
-            x={0}
-            y={formData.stipend ? (identicalRoles ? 130 : 90) : (identicalRoles ? 90 : 50)}
           />
         )}
       </Group>
