@@ -14,6 +14,7 @@ function App() {
     logoScale: 200,
     stipend: '',
     compensationType: 'Package',
+    headerType: 'ADYPSOE',
     students: []
   });
   const [setuFormData, setSetuFormData] = useState(initialSetuData);

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const FileUploadZone = ({ onUpload, onRemove, onEdit, isUploaded, defaultText, uploadedText, bgClass, hoverClass }) => {
@@ -154,6 +155,18 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
         <motion.div variants={containerVariants} initial="hidden" animate="show" className="flex flex-col gap-8">
           
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
+              <Label>Institute</Label>
+              <Select value={formData.headerType || 'ADYPSOE'} onValueChange={val => setFormData({ ...formData, headerType: val })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ADYPSOE">ADYPSOE</SelectItem>
+                  <SelectItem value="ADYPU">ADYPU</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="flex flex-col gap-2">
               <Label>Event Tag</Label>
               <Input

@@ -36,6 +36,7 @@ const CONTENT_W = CANVAS.width - CONTENT_X * 2;
 
 export const DEFAULT_CONTENT = {
   // ---- header ----
+  headerType: 'ADYPSOE',
   tagline: '"Empowerment through quality technical education"',
   collegeNameLine1: 'AJEENKYA',
   collegeNameLine2: 'DY Patil School of Engineering',
@@ -194,12 +195,27 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
   const [rightRibbon] = useImage('/setu_elements/right_ribbon.png');
   const [leftRibbon] = useImage('/setu_elements/left_ribbon.png');
   const [venueBar] = useImage('/setu_elements/Venue_bar.png');
-  const [headerImage] = useImage('/setu_elements/header.jpeg');
+  const isAdypu = c.headerType === 'ADYPU';
+  const [headerImage] = useImage(isAdypu ? '/setu_elements/header2.png' : '/setu_elements/header.jpeg');
   
-  const headerHeight = headerImage ? (headerImage.height * 656) / headerImage.width : 130;
-  const [naacLogo] = useImage('/elements/naac.png');
-  const [nirfLogo] = useImage('/elements/nirf.png');
-  const [isoLogo] = useImage('/elements/iso.png');
+  // ADYPSOE Header 1 default settings (locked aspect ratio)
+  const header1X = 37;
+  const header1Y = 39;
+  const header1Width = 645;
+  const header1Height = headerImage && !isAdypu ? (headerImage.height * 656) / headerImage.width : 130;
+
+  // ADYPU Header 2 manual settings (locked aspect ratio)
+  // Edit these values to manually adjust header 2 position and width
+  const header2X = 105;
+  const header2Y = 42;
+  const header2Width = 510;
+  const header2Height = headerImage && isAdypu ? (headerImage.height * header2Width) / headerImage.width : 130;
+
+  const headerX = isAdypu ? header2X : header1X;
+  const headerY = isAdypu ? header2Y : header1Y;
+  const headerWidth = isAdypu ? header2Width : header1Width;
+  const headerHeight = isAdypu ? header2Height : header1Height;
+
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -238,9 +254,9 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
         {headerImage && (
           <KonvaImage
             image={headerImage}
-            x={37}
-            y={39}
-            width={645}
+            x={headerX}
+            y={headerY}
+            width={headerWidth}
             height={headerHeight}
           />
         )}
