@@ -234,7 +234,19 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
       
       <CardContent className="px-6 pt-8 pb-8">
         <motion.div variants={containerVariants} initial="hidden" animate="show" className="flex flex-col gap-8">
-          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="flex flex-col gap-2">
+              <Label>Institute</Label>
+              <Select value={formData.headerType || 'ADYPSOE'} onValueChange={val => setFormData({ ...formData, headerType: val })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ADYPSOE">ADYPSOE</SelectItem>
+                  <SelectItem value="ADYPU">ADYPU</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="flex flex-col gap-2">
               <Label>Company Name</Label>
               <Input

@@ -12,9 +12,10 @@ export default function FlyerPreview({ formData, onExportReady }) {
   const flyerWidth = 1080;
   const flyerHeight = 1080;
 
+  const isAdypu = formData.headerType === 'ADYPU';
   const [bgImage] = useImage('/elements/Background.png');
-  const [headerImage] = useImage('/elements/header.jpeg');
-  const [footerImage] = useImage('/elements/lower element.png');
+  const [headerImage] = useImage(isAdypu ? '/elements/header2.png' : '/elements/header.jpeg');
+  const [footerImage] = useImage(isAdypu ? '/elements/footer2.png' : '/elements/lower element.png');
   const [logoImage] = useImage(formData.companyLogo);
 
   const [fontsLoaded, setFontsLoaded] = React.useState(false);
@@ -33,7 +34,23 @@ export default function FlyerPreview({ formData, onExportReady }) {
 
   const renderStudents = formData.students;
 
-  const headerHeight = headerImage ? (headerImage.height * flyerWidth) / headerImage.width : 200;
+  // ADYPSOE Header 1 default settings (locked aspect ratio)
+  const header1X = 0;
+  const header1Y = 0;
+  const header1Width = flyerWidth;
+  const header1Height = headerImage && !isAdypu ? (headerImage.height * flyerWidth) / headerImage.width : 200;
+
+  // ADYPU Header 2 manual settings (locked aspect ratio)
+  // Edit these values to manually adjust header 2 position and width
+  const header2X = 0;
+  const header2Y = 0;
+  const header2Width = flyerWidth;
+  const header2Height = headerImage && isAdypu ? (headerImage.height * header2Width) / headerImage.width : 200;
+
+  const headerX = isAdypu ? header2X : header1X;
+  const headerY = isAdypu ? header2Y : header1Y;
+  const headerWidth = isAdypu ? header2Width : header1Width;
+  const headerHeight = isAdypu ? header2Height : header1Height;
 
   // Footer building size (adjusting so it sits cleanly on the right)
   const footerW = flyerWidth * 0.85;
@@ -61,7 +78,9 @@ export default function FlyerPreview({ formData, onExportReady }) {
             {headerImage && (
               <KonvaImage
                 image={headerImage}
-                width={flyerWidth}
+                x={headerX}
+                y={headerY}
+                width={headerWidth}
                 height={headerHeight}
               />
             )}
@@ -136,10 +155,10 @@ export default function FlyerPreview({ formData, onExportReady }) {
 
             {/* Website URL on bottom right */}
             <Text
-              text="https://adypsoe.in/"
+              text={isAdypu ? "https://adypu.edu.in/" : "https://adypsoe.in/"}
               fontSize={20}
               fill="#c8102e"
-              x={flyerWidth - 190}
+              x={flyerWidth - (isAdypu ? 200 : 190)}
               y={flyerHeight - 60}
               fontStyle="bold"
             />

@@ -3,17 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FlyerForm from './components/FlyerForm';
 import FlyerPreview from './components/FlyerPreview';
 import Settings from './components/Settings';
+import SetuEventPoster, { DEFAULT_CONTENT as initialSetuData } from './components/Flyers/Setu';
+import SetuForm from './components/SetuForm';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('generator');
+  const [activeTab, setActiveTab] = useState('placement');
   const [formData, setFormData] = useState({
     companyName: '',
     companyLogo: null,
     logoScale: 200,
     stipend: '',
     compensationType: 'Package',
+    headerType: 'ADYPSOE',
     students: []
   });
+  const [setuFormData, setSetuFormData] = useState(initialSetuData);
   const [stageRef, setStageRef] = useState(null);
 
   const handleExportImage = () => {
@@ -29,7 +33,8 @@ function App() {
   };
 
   const tabs = [
-    { id: 'generator', label: 'Generator' },
+    { id: 'placement', label: 'Placement' },
+    { id: 'setu', label: 'Setu' },
     { id: 'settings', label: 'Settings' }
   ];
 
@@ -76,9 +81,9 @@ function App() {
         {/* Main Content Area */}
         <main className="w-full relative">
           <AnimatePresence mode="wait">
-            {activeTab === 'generator' ? (
+            {activeTab === 'placement' ? (
               <motion.div
-                key="generator"
+                key="placement"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -101,6 +106,36 @@ function App() {
                       formData={formData}
                       onExportReady={setStageRef}
                     />
+                  </div>
+                </div>
+              </motion.div>
+            ) : activeTab === 'setu' ? (
+              <motion.div
+                key="setu"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8"
+              >
+                {/* Left Column: Form & Results */}
+                <div className="lg:col-span-5 flex flex-col gap-8">
+                  <SetuForm
+                    formData={setuFormData}
+                    setFormData={setSetuFormData}
+                    onExportImage={handleExportImage}
+                  />
+                </div>
+
+                {/* Right Column: Preview */}
+                <div className="lg:col-span-7">
+                  <div className="sticky top-8">
+                    <div className="rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] ring-1 ring-zinc-200/60 bg-white" style={{ display: 'flex', justifyContent: 'center' }}>
+                      <SetuEventPoster 
+                        onExportReady={setStageRef}
+                        content={setuFormData}
+                      />
+                    </div>
                   </div>
                 </div>
               </motion.div>
