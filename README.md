@@ -2,7 +2,7 @@
 
 ![App Preview](placeholder-screenshot.png)
 *(Note: Please replace `placeholder-screenshot.png` with an actual screenshot of the live application)*
-
+Link for App : https://poster-spcr.netlify.app
 PlaceEdge is a specialized automation tool designed for the Placement Cell / SPCR Office to quickly generate high-quality placement flyers and LinkedIn announcements. It eliminates manual Canva design work and standardizes the process.
 
 ## 🚀 Features

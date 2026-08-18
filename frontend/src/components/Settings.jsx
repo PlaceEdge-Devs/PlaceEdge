@@ -38,7 +38,7 @@ export default function Settings() {
   const addHod = () => {
     const newDept = prompt("Enter department name:");
     if (newDept && !hodList[newDept]) {
-      setHodList(prev => ({ ...prev, [newDept]: { name: '', linkedinUrl: '' } }));
+      setHodList(prev => ({ ...prev, [newDept]: { name: '' } }));
     }
   };
 
@@ -55,7 +55,7 @@ export default function Settings() {
   };
 
   const addSpcr = () => {
-    setSpcrTeam([...spcrTeam, { name: '', linkedinUrl: '' }]);
+    setSpcrTeam([...spcrTeam, { name: '' }]);
   };
 
   const removeSpcr = (index) => {
@@ -91,9 +91,8 @@ export default function Settings() {
                     <X size={16} />
                   </button>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-4">
                   <input type="text" placeholder="Name" value={data.name} onChange={e => handleHodChange(dept, 'name', e.target.value)} className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
-                  <input type="url" placeholder="LinkedIn URL" value={data.linkedinUrl} onChange={e => handleHodChange(dept, 'linkedinUrl', e.target.value)} className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
                 </div>
               </motion.div>
             ))}
@@ -130,9 +129,8 @@ export default function Settings() {
                     <X size={16} />
                   </button>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-4">
                   <input type="text" placeholder="Name" value={member.name} onChange={e => handleSpcrChange(i, 'name', e.target.value)} className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
-                  <input type="url" placeholder="LinkedIn URL" value={member.linkedinUrl} onChange={e => handleSpcrChange(i, 'linkedinUrl', e.target.value)} className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-colors" />
                 </div>
               </motion.div>
             ))}

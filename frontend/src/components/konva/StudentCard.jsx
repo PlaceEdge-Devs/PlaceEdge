@@ -7,7 +7,8 @@ export default function StudentCard({ x, y, size, student, identicalRoles }) {
   
   const width = size;
   const height = size * 1.25;
-  const cornerRadius = 25; // increased for larger image
+  const cornerRadius = 25;
+  const scale = size / 240;
 
   return (
     <Group x={x} y={y}>
@@ -36,30 +37,30 @@ export default function StudentCard({ x, y, size, student, identicalRoles }) {
       
       <Text 
         text={student.name || 'Student Name'} 
-        fontSize={28} 
+        fontSize={28 * scale} 
         fontStyle="bold"
         align="center" 
         width={width} 
-        y={height + 25} 
+        y={height + 25 * scale} 
         fill="#c8102e"
       />
       
       <Text 
         text={`${student.year === 'Second Year' ? 'SE' : student.year === 'Third Year' ? 'TE' : 'BE'} ${student.department || 'Computer Engineering'}`} 
-        fontSize={22} 
+        fontSize={22 * scale} 
         fontStyle="bold"
         align="center" 
         width={width} 
-        y={height + 65} 
+        y={height + 65 * scale} 
         fill="#0c2340"
       />
       
       <Text 
         text={`Batch ${student.batch || '2026'}`} 
-        fontSize={22} 
+        fontSize={22 * scale} 
         align="center" 
         width={width} 
-        y={height + 95} 
+        y={height + 95 * scale} 
         fill="#0c2340"
       />
       
