@@ -73,10 +73,12 @@ export default function SingleStudentLayout({ student, formData, logoImage, head
           <Text text={formData.companyName} fontSize={26} fontStyle="bold" fill="#c8102e" x={145} />
         </Group>
 
-        <Group y={520}>
-          <Text text={`${formData.compensationType || 'Package'}: `} fontSize={26} fontStyle="bold" fill="#0c2340" />
-          <Text text={formData.stipend} fontSize={26} fontStyle="bold" fill="#c8102e" x={120} />
-        </Group>
+        {formData.stipend && (
+          <Group y={520}>
+            <Text text={`${formData.compensationType || 'Package'}: `} fontSize={26} fontStyle="bold" fill="#0c2340" />
+            <Text text={formData.stipend} fontSize={26} fontStyle="bold" fill="#c8102e" x={120} />
+          </Group>
+        )}
       </Group>
 
       {logoImage && (
