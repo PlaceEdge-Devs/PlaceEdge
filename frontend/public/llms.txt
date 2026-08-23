@@ -1,0 +1,33 @@
+# Poster-SPCR — ADYPSOE Placement Office Automation Tool
+
+> A web application for generating professional student placement announcement posters and Setu event flyers for ADYPSOE and ADYPU institutions.
+
+## About
+
+Poster-SPCR is an internal tool used by the Students Progression & Corporate Relations (SPCR) office at ADYPSOE (Adi Shankaracharya Group of Institutes) and ADYPU to automate the creation of placement announcement imagery. It allows staff to generate high-resolution (1080×1080px) placement posters and Setu event posters that can be exported directly as PNG files for social media distribution.
+
+## Features
+
+- Placement Poster Generator: Create customised placement flyers with student photos, company logos, compensation details, and department information
+- Setu Event Poster Generator: Create event posters for seminars and campus-to-corporate programs with speaker details and event logistics
+- Multi-Student Layouts: Supports 1 to 5 students per poster with automatic grid layouts
+- Image Export: High-resolution PNG export at 2× pixel ratio for crisp social media assets
+- Dark/Light Theme: Adaptive interface with glassmorphism design
+
+## Sections
+
+- [Placement Poster Tab](/#placement): Generate placement flyers for 1–5 placed students
+- [Setu Poster Tab](/#setu): Generate Setu seminar and event posters
+- [Settings Tab](/#settings): Application configuration and preferences
+
+## Technology
+
+- Built with: React 19, Vite 8, Tailwind CSS 4, Framer Motion, react-konva (canvas rendering)
+- Fonts used: Geist (UI), Halimun (decorative canvas text), Emilys Candy (heading)
+- Deployed on: Netlify
+
+## Limitations
+
+- This is an internal institutional tool; poster data is not persisted to any server
+- All image processing (cropping, export) is done client-side in the browser
+- Intended for ADYPSOE/ADYPU SPCR office use only
