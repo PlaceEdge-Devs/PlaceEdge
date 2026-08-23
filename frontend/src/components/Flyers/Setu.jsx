@@ -52,7 +52,7 @@ export const DEFAULT_CONTENT = {
   // ---- date / time / platform ----
   date: 'Date: Saturday, 1st August 2026',
   time: 'Time: 11:30 AM',
-  platform: 'Platform: Virtual (Online)',
+  platform: 'Virtual (Online)',
 
   // ---- body ----
   attendHeading: 'Who Should Attend:',
@@ -188,6 +188,8 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
   const c = { ...DEFAULT_CONTENT, ...content };
   const scale = width / CANVAS.width;
   const stageRef = useRef(null);
+  const platformRef = useRef(null);
+  const venueBarRef = useRef(null);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [bg0] = useImage('/setu_elements/Setu_background0.png');
@@ -309,7 +311,18 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
         {/* ---------------------------------------------------------------- */}
         {/* Date / time bar                                                  */}
         {/* ---------------------------------------------------------------- */}
-        <Group x={75} y={395}>
+        <Group 
+          ref={venueBarRef}
+          x={75} 
+          y={395} 
+          draggable
+          dragBoundFunc={(pos) => {
+            return {
+              x: 75 * scale,
+              y: pos.y
+            };
+          }}
+        >
           {venueBar && <KonvaImage image={venueBar} x={0} y={0} width={570} height={45} />}
           {!venueBar && <Rect x={0} y={0} width={570} height={45} fill={COLORS.gray} cornerRadius={6} />}
           
@@ -318,15 +331,23 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
         </Group>
 
         <Text
+          ref={platformRef}
           x={CONTENT_X}
           y={465}
           width={CONTENT_W}
           align="center"
-          text={`Platform: ${c.platform.replace('Platform: ', '')}`}
+          text={`${c.platform}`}
           fontSize={18}
           fontStyle="bold"
           fill={COLORS.textDark}
           fontFamily={FONTS.base}
+          draggable
+          dragBoundFunc={(pos) => {
+            return {
+              x: CONTENT_X * scale,
+              y: pos.y
+            };
+          }}
         />
 
         {/* ---------------------------------------------------------------- */}
@@ -345,16 +366,16 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
 
         <PlaceholderImage
           src={c.speakerPhotoSrc}
-          x={410}
+          x={425}
           y={515}
           width={245}
           height={280}
           cornerRadius={20}
           label="SPEAKER\nPHOTO"
         />
-        <Rect x={410} y={515 + 280 - 45} width={245} height={45} fill={COLORS.red} opacity={0.94} cornerRadius={[0, 0, 20, 20]} />
+        <Rect x={425} y={515 + 280 - 45} width={245} height={45} fill={COLORS.red} opacity={0.94} cornerRadius={[0, 0, 20, 20]} />
         <Text
-          x={410}
+          x={425}
           y={515 + 280 - 40}
           width={245}
           align="center"
@@ -365,7 +386,7 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
           fontFamily={FONTS.base}
         />
         <Text
-          x={410}
+          x={425}
           y={515 + 280 - 20}
           width={245}
           align="center"
