@@ -192,13 +192,13 @@ export default function SetuEventPoster({ content = DEFAULT_CONTENT, width = CAN
   const venueBarRef = useRef(null);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [bg0] = useImage('/setu_elements/Setu_background0.png');
-  const [bg1] = useImage('/setu_elements/Setu_background1.png');
+  const [bg0] = useImage('/setu_elements/Setu_background0.webp');
+  const [bg1] = useImage('/setu_elements/Setu_background1.webp');
   const [rightRibbon] = useImage('/setu_elements/right_ribbon.png');
   const [leftRibbon] = useImage('/setu_elements/left_ribbon.png');
-  const [venueBar] = useImage('/setu_elements/Venue_bar.png');
+  const [venueBar] = useImage('/setu_elements/Venue_bar.webp');
   const isAdypu = c.headerType === 'ADYPU';
-  const [headerImage] = useImage(isAdypu ? '/setu_elements/header2.png' : '/setu_elements/header.jpeg');
+  const [headerImage] = useImage(isAdypu ? '/setu_elements/header2.webp' : '/setu_elements/header.jpeg');
   
   // ADYPSOE Header 1 default settings (locked aspect ratio)
   const header1X = 37;

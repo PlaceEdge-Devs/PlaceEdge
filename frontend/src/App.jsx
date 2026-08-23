@@ -1,7 +1,6 @@
 import React, { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FlyerForm from './components/FlyerForm';
-import Settings from './components/Settings';
 import SetuForm from './components/SetuForm';
 import {
   GradientOrbs,
@@ -179,7 +178,6 @@ function App() {
   const tabs = [
     { id: 'placement', label: 'Placement' },
     { id: 'setu', label: 'Setu' },
-    { id: 'settings', label: 'Settings' },
   ];
 
   return (
@@ -361,19 +359,6 @@ function App() {
                     </CanvasPanel>
                   </div>
                 </div>
-              </motion.div>
-            )}
-
-            {/* ── Settings ── */}
-            {activeTab === 'settings' && (
-              <motion.div
-                key="settings"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-              >
-                <Settings />
               </motion.div>
             )}
 
