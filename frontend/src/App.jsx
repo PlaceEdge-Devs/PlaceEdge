@@ -1,10 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FlyerForm from './components/FlyerForm';
-import FlyerPreview from './components/FlyerPreview';
 import Settings from './components/Settings';
-import SetuEventPoster, { DEFAULT_CONTENT as initialSetuData } from './components/Flyers/Setu';
 import SetuForm from './components/SetuForm';
+
+const FlyerPreview = lazy(() => import('./components/FlyerPreview'));
+const SetuEventPoster = lazy(() => import('./components/Flyers/Setu'));
+
+const initialSetuData = {
+  headerType: 'ADYPSOE',
+  eventTag: 'CAMPUS TO CORPORATE',
+  seminarTitle: 'Seminar Title',
+  date: 'Date: ',
+  time: 'Time: ',
+  platform: 'Platform: Virtual (Online)',
+  speakerPhotoSrc: null,
+  speakerName: '',
+  speakerTitle: '',
+  attendHeading: 'Who Should Attend:',
+  attendBullets: []
+};
+
+function CanvasSkeleton() {
+  return (
+    <div className="rounded-[2.5rem] w-full h-[600px] bg-zinc-200/50 animate-pulse flex items-center justify-center">
+      <span className="text-zinc-400 font-medium">Loading Canvas...</span>
+    </div>
+  );
+}
 
 function App() {
   const [activeTab, setActiveTab] = useState('placement');
@@ -53,7 +76,7 @@ function App() {
             <h1 className="text-4xl tracking-tight font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-red-400 drop-shadow-sm" style={{ fontFamily: "'Emilys Candy', cursive" }}>
               Poster SPCR - ADYPSOE
             </h1>
-            <p className="text-zinc-500 mt-2 font-medium tracking-wide text-sm">ADYPSOE SPCR Office Automation</p>
+            <p className="text-zinc-600 mt-2 font-medium tracking-wide text-sm">ADYPSOE SPCR Office Automation</p>
           </div>
 
           {/* Mac OS Dock / Pill Navigation */}
@@ -102,10 +125,12 @@ function App() {
                 {/* Right Column: Preview */}
                 <div className="lg:col-span-7">
                   <div className="sticky top-8">
-                    <FlyerPreview
-                      formData={formData}
-                      onExportReady={setStageRef}
-                    />
+                    <Suspense fallback={<CanvasSkeleton />}>
+                      <FlyerPreview
+                        formData={formData}
+                        onExportReady={setStageRef}
+                      />
+                    </Suspense>
                   </div>
                 </div>
               </motion.div>
@@ -131,10 +156,12 @@ function App() {
                 <div className="lg:col-span-7">
                   <div className="sticky top-8">
                     <div className="rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] ring-1 ring-zinc-200/60 bg-white" style={{ display: 'flex', justifyContent: 'center' }}>
-                      <SetuEventPoster 
-                        onExportReady={setStageRef}
-                        content={setuFormData}
-                      />
+                      <Suspense fallback={<CanvasSkeleton />}>
+                        <SetuEventPoster 
+                          onExportReady={setStageRef}
+                          content={setuFormData}
+                        />
+                      </Suspense>
                     </div>
                   </div>
                 </div>

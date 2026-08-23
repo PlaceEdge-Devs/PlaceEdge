@@ -5,8 +5,36 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poster-SPCR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
+  <title>Poster-SPCR | ADYPSOE Placement Office Automation</title>
+
+  <!-- SEO: Meta description -->
+  <meta name="description" content="Poster-SPCR is the official placement poster and flyer generation tool for ADYPSOE & ADYPU. Create professional student placement announcements and Setu event posters instantly." />
+
+  <!-- Performance: Preload the local Halimun font used in the canvas LCP element -->
+  <!-- This eliminates the 1.5s font request chain before the Konva canvas can render -->
+  <link
+    rel="preload"
+    href="/src/assets/Halimun.ttf"
+    as="font"
+    type="font/ttf"
+    crossorigin="anonymous"
+  />
+
+  <!-- Performance: Establish early connections to Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Performance: Non-render-blocking async Google Font load (Emilys Candy) -->
+  <!-- The onload swap trick: starts as a preload, converts to stylesheet after download -->
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" />
+  </noscript>
 </head>
 
 <body>

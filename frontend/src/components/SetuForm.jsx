@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, Download, UploadCloud, X, Crop } from 'lucide-react';
 
-import ImageCropperDialog from './ImageCropperDialog';
+const ImageCropperDialog = lazy(() => import('./ImageCropperDialog'));
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,6 +53,7 @@ const FileUploadZone = ({ onUpload, onRemove, onEdit, isUploaded, defaultText, u
         accept="image/*"
         onChange={handleFileInputChange}
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        aria-label={defaultText}
       />
       <div className={`flex items-center gap-2 border rounded-md px-4 py-2.5 text-sm transition-all duration-200 ${isDragging ? 'bg-emerald-50/80 border-emerald-400 text-emerald-600 shadow-sm' : `border-zinc-200 text-zinc-500 ${bgClass} ${hoverClass}`}`}>
         {isDragging ? <UploadCloud size={16} /> : <Camera size={16} />}
@@ -156,9 +157,9 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
           
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col gap-2">
-              <Label>Institute</Label>
+              <Label htmlFor="setu-institute-select">Institute</Label>
               <Select value={formData.headerType || 'ADYPSOE'} onValueChange={val => setFormData({ ...formData, headerType: val })}>
-                <SelectTrigger>
+                <SelectTrigger id="setu-institute-select">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -168,8 +169,9 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
               </Select>
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Event Tag</Label>
+              <Label htmlFor="setu-event-tag">Event Tag</Label>
               <Input
+                id="setu-event-tag"
                 type="text"
                 value={formData.eventTag}
                 onChange={e => setFormData({ ...formData, eventTag: e.target.value })}
@@ -178,8 +180,9 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
             </div>
             
             <div className="flex flex-col gap-2 md:col-span-2">
-              <Label>Seminar Title</Label>
+              <Label htmlFor="setu-seminar-title">Seminar Title</Label>
               <Input
+                id="setu-seminar-title"
                 type="text"
                 value={formData.seminarTitle}
                 onChange={e => setFormData({ ...formData, seminarTitle: e.target.value })}
@@ -188,8 +191,9 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label>Date</Label>
+              <Label htmlFor="setu-date">Date</Label>
               <Input
+                id="setu-date"
                 type="text"
                 value={formData.date}
                 onChange={e => setFormData({ ...formData, date: e.target.value })}
@@ -198,8 +202,9 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label>Time</Label>
+              <Label htmlFor="setu-time">Time</Label>
               <Input
+                id="setu-time"
                 type="text"
                 value={formData.time}
                 onChange={e => setFormData({ ...formData, time: e.target.value })}
@@ -208,8 +213,9 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label>Platform</Label>
+              <Label htmlFor="setu-platform">Platform</Label>
               <Input
+                id="setu-platform"
                 type="text"
                 value={formData.platform}
                 onChange={e => setFormData({ ...formData, platform: e.target.value })}
@@ -238,16 +244,18 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label>Speaker Name</Label>
-                  <Input 
+                  <Label htmlFor="setu-speaker-name">Speaker Name</Label>
+                  <Input
+                    id="setu-speaker-name"
                     type="text" 
                     value={formData.speakerName} 
                     onChange={e => setFormData({ ...formData, speakerName: e.target.value })} 
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label>Speaker Title</Label>
-                  <Input 
+                  <Label htmlFor="setu-speaker-title">Speaker Title</Label>
+                  <Input
+                    id="setu-speaker-title"
                     type="text" 
                     value={formData.speakerTitle} 
                     onChange={e => setFormData({ ...formData, speakerTitle: e.target.value })} 
@@ -264,8 +272,9 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
               </CardHeader>
               <CardContent className="pt-5 flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
-                  <Label>Heading</Label>
-                  <Input 
+                  <Label htmlFor="setu-attend-heading">Heading</Label>
+                  <Input
+                    id="setu-attend-heading"
                     type="text" 
                     value={formData.attendHeading} 
                     onChange={e => setFormData({ ...formData, attendHeading: e.target.value })} 
@@ -297,13 +306,15 @@ export default function SetuForm({ formData, setFormData, onExportImage }) {
         </motion.div>
       </CardContent>
 
-      <ImageCropperDialog
-        open={cropModalOpen}
-        onOpenChange={setCropModalOpen}
-        imageSrc={cropImageSrc}
-        aspect={362 / 430}
-        onCropComplete={handleCropComplete}
-      />
+      <Suspense fallback={null}>
+        <ImageCropperDialog
+          open={cropModalOpen}
+          onOpenChange={setCropModalOpen}
+          imageSrc={cropImageSrc}
+          aspect={362 / 430}
+          onCropComplete={handleCropComplete}
+        />
+      </Suspense>
     </Card>
   );
 }

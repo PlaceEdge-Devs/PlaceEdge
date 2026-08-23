@@ -13,9 +13,9 @@ export default function FlyerPreview({ formData, onExportReady }) {
   const flyerHeight = 1080;
 
   const isAdypu = formData.headerType === 'ADYPU';
-  const [bgImage] = useImage('/elements/Background.png');
-  const [headerImage] = useImage(isAdypu ? '/elements/header2.png' : '/elements/header.jpeg');
-  const [footerImage] = useImage(isAdypu ? '/elements/footer2.png' : '/elements/lower element.png');
+  const [bgImage] = useImage('/elements/Background.webp');
+  const [headerImage] = useImage(isAdypu ? '/elements/header2.png' : '/elements/header.webp');
+  const [footerImage] = useImage(isAdypu ? '/elements/footer2.png' : '/elements/lower element.webp');
   const [logoImage] = useImage(formData.companyLogo);
 
   const [fontsLoaded, setFontsLoaded] = React.useState(false);

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, Download, UploadCloud, X, Crop } from 'lucide-react';
 
-import ImageCropperDialog from './ImageCropperDialog';
+const ImageCropperDialog = lazy(() => import('./ImageCropperDialog'));
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -55,6 +55,7 @@ const FileUploadZone = ({ onUpload, onRemove, onEdit, isUploaded, defaultText, u
         accept="image/*"
         onChange={handleFileInputChange}
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        aria-label={defaultText}
       />
       <div className={`flex items-center gap-2 border rounded-md px-4 py-2.5 text-sm transition-all duration-200 ${isDragging ? 'bg-emerald-50/80 border-emerald-400 text-emerald-600 shadow-sm' : `border-zinc-200 text-zinc-500 ${bgClass} ${hoverClass}`}`}>
         {isDragging ? <UploadCloud size={16} /> : <Camera size={16} />}
@@ -219,7 +220,7 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
           value={String(formData.students.length || 1)}
           onValueChange={handleLayoutChange}
         >
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-[140px]" aria-label="Number of students">
             <SelectValue placeholder="Select students" />
           </SelectTrigger>
           <SelectContent>
@@ -236,9 +237,9 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
         <motion.div variants={containerVariants} initial="hidden" animate="show" className="flex flex-col gap-8">
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="flex flex-col gap-2">
-              <Label>Institute</Label>
+              <Label htmlFor="institute-select">Institute</Label>
               <Select value={formData.headerType || 'ADYPSOE'} onValueChange={val => setFormData({ ...formData, headerType: val })}>
-                <SelectTrigger>
+                <SelectTrigger id="institute-select">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -248,8 +249,9 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
               </Select>
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Company Name</Label>
+              <Label htmlFor="company-name">Company Name</Label>
               <Input
+                id="company-name"
                 type="text"
                 value={formData.companyName}
                 onChange={e => setFormData({ ...formData, companyName: e.target.value })}
@@ -300,11 +302,14 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
                     onCheckedChange={(checked) => 
                       setFormData({ ...formData, compensationType: checked ? 'Stipend' : 'Package' })
                     }
+                    aria-label="Toggle between Package and Stipend compensation type"
                   />
                   <span className="text-xs text-zinc-500">Stipend</span>
                 </div>
               </div>
+              <Label htmlFor="compensation-amount" className="sr-only">{isStipend ? 'Stipend' : 'Package'} Amount</Label>
               <Input
+                id="compensation-amount"
                 type="text"
                 value={formData.stipend}
                 onChange={e => setFormData({ ...formData, stipend: e.target.value })}
@@ -326,8 +331,9 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-5">
                   <div className="flex flex-col gap-2">
-                    <Label>Full Name</Label>
-                    <Input 
+                    <Label htmlFor={`student-name-${i}`}>Full Name</Label>
+                    <Input
+                      id={`student-name-${i}`}
                       type="text" 
                       value={student.name} 
                       onChange={e => handleStudentChange(i, 'name', e.target.value)} 
@@ -349,9 +355,9 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label>Year</Label>
+                    <Label htmlFor={`year-select-${i}`}>Year</Label>
                     <Select value={student.year || 'Final Year'} onValueChange={val => handleStudentChange(i, 'year', val)}>
-                      <SelectTrigger>
+                      <SelectTrigger id={`year-select-${i}`}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -363,9 +369,9 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label>Department</Label>
+                    <Label htmlFor={`department-select-${i}`}>Department</Label>
                     <Select value={student.department} onValueChange={val => handleStudentChange(i, 'department', val)}>
-                      <SelectTrigger>
+                      <SelectTrigger id={`department-select-${i}`}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -381,8 +387,9 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label>Role</Label>
-                    <Input 
+                    <Label htmlFor={`student-role-${i}`}>Role</Label>
+                    <Input
+                      id={`student-role-${i}`}
                       type="text" 
                       value={student.role} 
                       onChange={e => handleStudentChange(i, 'role', e.target.value)} 
@@ -390,8 +397,9 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label>Batch</Label>
-                    <Input 
+                    <Label htmlFor={`student-batch-${i}`}>Batch</Label>
+                    <Input
+                      id={`student-batch-${i}`}
                       type="text" 
                       value={student.batch} 
                       onChange={e => handleStudentChange(i, 'batch', e.target.value)} 
@@ -417,13 +425,15 @@ export default function FlyerForm({ formData, setFormData, onExportImage }) {
         </motion.div>
       </CardContent>
 
-      <ImageCropperDialog
-        open={cropModalOpen}
-        onOpenChange={setCropModalOpen}
-        imageSrc={cropImageSrc}
-        aspect={cropTarget === 'logo' ? undefined : 280 / 320}
-        onCropComplete={handleCropComplete}
-      />
+      <Suspense fallback={null}>
+        <ImageCropperDialog
+          open={cropModalOpen}
+          onOpenChange={setCropModalOpen}
+          imageSrc={cropImageSrc}
+          aspect={cropTarget === 'logo' ? undefined : 280 / 320}
+          onCropComplete={handleCropComplete}
+        />
+      </Suspense>
     </Card>
   );
 }
